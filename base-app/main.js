@@ -3,6 +3,7 @@ import javascriptLogo from './javascript.svg'
 import viteLogo from '/vite.svg'
 import { Clock } from './Clock.js'
 import { Controls } from './Controls.js'
+import { setupExpensiveBackgroundTask } from './expensiveBackgroundTask.js'
 
 document.querySelector('#app').innerHTML = `
   <div>
@@ -29,6 +30,8 @@ class App {
       document.querySelector('#toggle'),
       new Clock(document.querySelector('#clock'))
     )
+
+    setupExpensiveBackgroundTask(5000)
   }
 }
 
