@@ -2,8 +2,6 @@ import './style.css'
 import javascriptLogo from './javascript.svg'
 import viteLogo from '/vite.svg'
 import { Clock } from './Clock.js'
-import { Controls } from './Controls.js'
-import { setupExpensiveBackgroundTask } from './expensiveBackgroundTask.js'
 
 document.querySelector('#app').innerHTML = `
   <div>
@@ -14,10 +12,8 @@ document.querySelector('#app').innerHTML = `
       <img src="${javascriptLogo}" class="logo vanilla" alt="JavaScript logo" />
     </a>
     <h1>Hello Vite!</h1>
-    <div id="clock">Press start button to turn on the clock</div>
-    <div class="controls">
-      <button id="toggle" type="button">Toggle</button>
-    </div>
+    <div id="clock"></div>
+    <iframe src="http://two.com:9002"></iframe>
     <p class="read-the-docs">
       Click on the Vite logo to learn more
     </p>
@@ -26,12 +22,10 @@ document.querySelector('#app').innerHTML = `
 
 class App {
   constructor() {
-    new Controls(
-      document.querySelector('#toggle'),
-      new Clock(document.querySelector('#clock'))
-    )
-
-    setupExpensiveBackgroundTask(5000)
+    const clock = new Clock(document.querySelector('#clock'))
+    window.addEventListener("message", ({ data }) => {
+      if (data === "toggle") clock.toggle()
+    })
   }
 }
 
