@@ -3,10 +3,16 @@ const blockMainThread = (wait) => {
     while (Date.now() < startTime + wait) {}
 };
 
-const setupExpensiveBackgroundTask = (interval) => {
+const setupExpensiveBackgroundTask = (interval, statusContainer) => {
     const recursivelyBlockMainThread = () => {
-        blockMainThread(interval);
-        setTimeout(recursivelyBlockMainThread, interval);
+        requestAnimationFrame(() => {
+            statusContainer.innerHTML = "blocked"
+            requestAnimationFrame(() => {
+                statusContainer.innerHTML = "unblocked"
+                blockMainThread(interval);
+                setTimeout(recursivelyBlockMainThread, interval);
+            })
+        })
     };
 
     recursivelyBlockMainThread();

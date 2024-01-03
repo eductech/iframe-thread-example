@@ -6,6 +6,7 @@ document.querySelector('#app').innerHTML = `
   <div>
     <div class="controls">
       <button id="toggle" type="button">Toggle</button>
+      <div id="status"></div>
     </div>
   </div>
 `
@@ -14,7 +15,7 @@ class App {
   constructor() {
     new Controls(document.querySelector('#toggle'))
 
-    setupExpensiveBackgroundTask(4000)
+    setupExpensiveBackgroundTask(5000, document.querySelector('#status'))
   }
 }
 
